@@ -22,25 +22,31 @@ angular.module('samsungcot.controllers', [])
 
   $scope.printRefresh = function() {
     //alert('printrefresh');
+    $scope.printerbox = {};
+    $scope.cargandoPrinters = true;
+    $scope.noPrinterFound = false;
+    printers = [];
+    $scope.printerList=printers;
+
     ble.startScan([], function(device) {
       //alert(JSON.stringify(device));
       printer = { nombre: device.name, id: device.id };
       printers.push(printer);
-      var string = device.name,
+      /*var string = device.name,
       substring = "SAMSTORECC";
       if (string.indexOf(substring) !== -1) {
         app.impID = device.id;
         app.impNN = device.name;
         $localStorage.app = app;
-        alert('set default: '+device.id)
-      }
+        //alert('set default: '+device.id)
+      }*/
     } , function(x) {
       // ERR
       alert('err:'+JSON.stringify(x));
     })
 
     $timeout(function() {
-      alert('timeout');
+      //alert('timeout');
 
       $scope.cargandoPrinters = false;
       $scope.printerList=printers;
@@ -94,10 +100,9 @@ angular.module('samsungcot.controllers', [])
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
-
-        err('OK'); 
+        err('OK '+JSON.stringify(x));
       }, function(x) { 
-        err('No se pudo imprimir');
+        err('No se pudo imprimir '+JSON.stringify(x));
       });
     }
     else {
@@ -108,27 +113,32 @@ angular.module('samsungcot.controllers', [])
 
   $scope.impActivar = function(item) {
 
-    if (app.impID != null) {
-      ble.isConnected(amp.impID, function() {
-        ble.disconnect(amp.impID, function() {}, function() {});
-      }, function() {
-
-      });
-    }
-
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;
 
-    ble.connect(app.impID, function(peripheral) {
-      alert('conectado');
-      alert(JSON.stringify(peripheral));
-      $location.path( "main/home", false ); 
-      $ionicLoading.hide();
-    }, function() { 
-      err('Problemas al conectar a su impresora. Intente mas tarde.');
-      $ionicLoading.hide();
-    });
+    if (app.impID != null) {
+      ble.isConnected(amp.impID, function() {
+        alert('ya conectado');
+        //ble.disconnect(amp.impID, function() {}, function() {});
+      }, function() {
+        alert('no conectado, conectar ahora');
+        ble.connect(app.impID, function(peripheral) {
+          alert('conectado');
+          alert(JSON.stringify(peripheral));
+          //$location.path( "main/home", false ); 
+          $ionicLoading.hide();
+        }, function() { 
+          err('Problemas al conectar a su impresora. Intente mas tarde.');
+          $ionicLoading.hide();
+        });
+      });
+
+    }
+
+
+
+
   };
 
 
