@@ -116,13 +116,24 @@ angular.module('samsungcot.controllers', [])
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;
-
+    var conectar = 0;
     if (app.impID != null) {
       ble.isConnected(amp.impID, function() {
-        alert('ya conectado');
+        alert('ya conectado, no conectar');
+        conectar = 0;
         //ble.disconnect(amp.impID, function() {}, function() {});
       }, function() {
         alert('no conectado, conectar ahora');
+        conectar = 1;
+
+      });
+    }
+    else {
+      conectar = 1;
+    }
+
+    if (conectar == 1) { 
+        alert('ok conectar 1');
         ble.connect(app.impID, function(peripheral) {
           alert('conectado');
           alert(JSON.stringify(peripheral));
@@ -132,16 +143,8 @@ angular.module('samsungcot.controllers', [])
           err('Problemas al conectar a su impresora. Intente mas tarde.');
           $ionicLoading.hide();
         });
-      });
-
     }
-
-
-
-
   };
-
-
 })
 
 
