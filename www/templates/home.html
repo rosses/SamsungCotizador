@@ -27,7 +27,7 @@
 	    </h3>
 
 	    <ion-list>
-	      <ion-radio ng-repeat="printer in printerList" onclick="impActivar2('{{printer.nombre}}');" data-nombre="{{printer.nombre}}" ng-click="impActivar($event)" ng-model="printerbox.sel" ng-value="printer.id">{{printer.nombre}}</ion-radio>
+	      <ion-radio ng-repeat="printer in printerList" data-nombre="{{printer.nombre}}" ng-click="impActivar($event)" ng-model="printerbox.sel" ng-value="printer.id">{{printer.nombre}}</ion-radio>
 	    </ion-list>
 
 	    <div class="loading text-center" ng-show="cargandoPrinters">
