@@ -1,22 +1,3 @@
-
-function err(msg) {
-  console.log(msg);
-  navigator.notification.alert(
-      (msg ? msg : 'Error al consultar el servicio. Intente más tarde'),  // message
-      function() { },
-      'Error',
-      'OK'
-  );
-}
-
-String.prototype.toBytes = function() {
-    var arr = []
-    for (var i=0; i < this.length; i++) {
-    arr.push(this[i].charCodeAt(0))
-    }
-    return arr
-}
-
 angular.module('samsungcot.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicSideMenuDelegate, $ionicPopup, $ionicLoading) {
@@ -147,7 +128,8 @@ angular.module('samsungcot.controllers', [])
   if (!$localStorage.app) { $localStorage.app = app; }
   else {
     if ($localStorage.app.auth == 1) {
-      $location.path( "home/main", false );
+      //$location.path( "home/main", false );
+      $state.go( "home.main" );
     }
   }
   
@@ -172,8 +154,8 @@ angular.module('samsungcot.controllers', [])
       jQuery.post(app.restApi+"action=validarInstalacion", {clave: $scope.user.password}, function(data) {
         if (data.clave == 1) {
           app.auth = 1;
-          $localStorage.app = app;
-          $location.path( "home/main", false );
+          $localStorage.app = app;         
+          $state.go( "home.main" );
         }
         else {
           $ionicPopup.alert({
@@ -190,3 +172,22 @@ angular.module('samsungcot.controllers', [])
     }
   };
 });
+
+
+function err(msg) {
+  console.log(msg);
+  navigator.notification.alert(
+      (msg ? msg : 'Error al consultar el servicio. Intente más tarde'),  // message
+      function() { },
+      'Error',
+      'OK'
+  );
+}
+
+String.prototype.toBytes = function() {
+    var arr = []
+    for (var i=0; i < this.length; i++) {
+    arr.push(this[i].charCodeAt(0))
+    }
+    return arr
+}
