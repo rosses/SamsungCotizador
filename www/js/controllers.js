@@ -93,9 +93,17 @@ angular.module('samsungcot.controllers', [])
       buffer.write(code);
       */
       //var barcode = [0x1d,0x6b,0x08];
-      var barcode = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10,"0123456789",String.fromCharCode(10)];
+      //var barcode = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10,"0123456789",String.fromCharCode(10)];
+                                                
                                                                                 //tipo -> largo string
-      var data = "Test de impresion".toBytes().concat(barcode).concat([0x01B, 0x64, 4]);
+
+      //var data = "Test de impresion".toBytes().concat(barcode).concat([0x01B, 0x64, 4]);
+      var x1 = [0x01B, 0x40];
+      var x2 = [0x1B, 0x21, 3];
+      var x3 = "hola".toBytes();
+      var x4 = [0x1D, 0x6B];
+      var x5 = "014785".toBytes();
+      var data = x1.concat(x2).concat(x3).concat(x4).concat(x5);
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
@@ -115,7 +123,7 @@ angular.module('samsungcot.controllers', [])
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;
-        
+
     ble.isConnected(app.impID, function() {
       alert('ya conectado, desconectar y conectar');
       ble.disconnect(app.impID, function() { alert('desconectado conectamos denuevo'); conectar(); }, function() { alert('no desconectado'); });      
