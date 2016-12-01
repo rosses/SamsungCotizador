@@ -122,9 +122,9 @@ angular.module('samsungcot.controllers', [])
     var conectar = 0;
 
     if (app.impID != null) {
-      ble.isConnected(amp.impID, function() {
+      ble.isConnected(app.impID, function() {
         alert('ya conectado, desconectar y conectar');
-        ble.disconnect(amp.impID, function() { alert('desconectado'); }, function() { alert('no desconectado'); });
+        ble.disconnect(app.impID, function() { alert('desconectado'); }, function() { alert('no desconectado'); });
         conectar = 1;
         
       }, function() {
