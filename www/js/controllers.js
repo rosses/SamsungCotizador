@@ -57,20 +57,23 @@ angular.module('samsungcot.controllers', [])
 
   $scope.imprimir = function() {
     if (app.impNN != "") {
-      var buffer = new MutableBuffer(/* initialSize, blockSize */);
-
+      alert('imprimir en '+app.impNN);
+      var buffer = new MutableBuffer();
+      alert(buffer);
       var code = "00015742";
       var type = "CODE128";
-      var width = "200";
-      var height = "4";
+      var width = 200;
+      var height = 4;
       var position = "BLW";
       var font = "A";
+
       if(width >= 1 || width <= 255){
         buffer.write(_.BARCODE_FORMAT.BARCODE_WIDTH);
       }
       if(height >=2  || height <= 6){
         buffer.write(_.BARCODE_FORMAT.BARCODE_HEIGHT);
       }
+
       buffer.write(_.BARCODE_FORMAT[
         'BARCODE_FONT_' + (font || 'A').toUpperCase()
       ]);
@@ -80,6 +83,7 @@ angular.module('samsungcot.controllers', [])
       buffer.write(_.BARCODE_FORMAT[
         'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
       ]);
+
       buffer.write(code);
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
@@ -109,6 +113,7 @@ angular.module('samsungcot.controllers', [])
     $localStorage.app = app;
 
     ble.connect(app.impID, function(peripheral) {
+      alert('conectado');
       $location.path( "main/home", false ); 
       $ionicLoading.hide();
     }, function() { 
