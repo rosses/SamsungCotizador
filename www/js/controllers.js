@@ -18,7 +18,7 @@ angular.module('samsungcot.controllers', [])
   $scope.cargandoPrinters = true;
   $scope.noPrinterFound = false;
   printers = [];
-
+  /*
   ble.startScan([], function(device) {
     printer = { nombre: device.name, id: device.id };
     printers.push(printer);
@@ -45,7 +45,7 @@ angular.module('samsungcot.controllers', [])
     ble.stopScan(function() {}, function() {});
 
   },5000);
-  
+  */
 
 
   $scope.imprimir = function() {
