@@ -30,17 +30,17 @@ angular.module('samsungcot', ['ionic', 'samsungcot.controllers','ngStorage'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('home', {
-    url: '/home',
-    templateUrl: 'templates/home.html',
-    controller: 'HomeCtrl'
-  })
-
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   }) 
+
+  .state('home', {
+    url: '/home',
+    templateUrl: 'templates/home.html',
+    controller: 'HomeCtrl'
+  })
 
   .state('home.main', {
     url: '/main',

@@ -26,18 +26,18 @@ angular.module('samsungcot.controllers', [])
 })
 
 .controller('HomeCtrl', function($scope, $state, $localStorage, $location) {
-  alert('HOME');
-  if (!$localStorage.app) { $localStorage.app = app; alert('NO STORAGE'); }
+  
+  /*
+  if (!$localStorage.app) { $localStorage.app = app;  }
   if ($localStorage.app.auth == 0) {
-      alert('AUTH = 0');
       $location.path( "login", false );
   }
+  */
   $scope.printerbox = {};
   $scope.cargandoPrinters = true;
   $scope.noPrinterFound = false;
   printers = [];
 
-  alert('BLE');
   ble.startScan([], function(device) {
     printer = { nombre: device.name, id: device.id };
     printers.push(printer);
@@ -63,7 +63,7 @@ angular.module('samsungcot.controllers', [])
 
     ble.stopScan(function() {}, function() {});
 
-  },5000)
+  },5000);
   
 
 
@@ -127,7 +127,7 @@ angular.module('samsungcot.controllers', [])
       err('Problemas al conectar a su impresora. Intente mas tarde.');
       $ionicLoading.hide();
     });
-  }
+  };
 
 
 })
@@ -172,9 +172,7 @@ angular.module('samsungcot.controllers', [])
       jQuery.post(app.restApi+"action=validarInstalacion", {clave: $scope.user.password}, function(data) {
         if (data.clave == 1) {
           app.auth = 1;
-          alert('AUTH');
           $localStorage.app = app;
-          alert('REDIR');
           $location.path( "home/main", false );
         }
         else {
