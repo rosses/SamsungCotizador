@@ -22,7 +22,6 @@ angular.module('samsungcot.controllers', [])
 
   $scope.printRefresh = function() {
     //alert('printrefresh');
-    $scope.printerbox = {};
     $scope.cargandoPrinters = true;
     $scope.noPrinterFound = false;
     printers = [];
@@ -116,22 +115,28 @@ angular.module('samsungcot.controllers', [])
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;
+
+    alert('seleccionado '+impID);
+    alert('name '+impNN);
+
     var conectar = 0;
+
     if (app.impID != null) {
       ble.isConnected(amp.impID, function() {
-        alert('ya conectado, no conectar');
-        conectar = 0;
-        //ble.disconnect(amp.impID, function() {}, function() {});
+        alert('ya conectado, desconectar y conectar');
+        ble.disconnect(amp.impID, function() { alert('desconectado'); }, function() { alert('no desconectado'); });
+        conectar = 1;
+        
       }, function() {
         alert('no conectado, conectar ahora');
         conectar = 1;
-
       });
     }
     else {
       conectar = 1;
     }
 
+    alert('conectar '+conectar);
     if (conectar == 1) { 
         alert('ok conectar 1');
         ble.connect(app.impID, function(peripheral) {
