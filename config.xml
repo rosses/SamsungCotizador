@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.samsungcotizador111943" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.abastiblebbrand.terreno" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>SamsungCotizador</name>
   <description>
         Cotizador tiendas Samsung Store Chile
     </description>
   <author email="jtoro@samsungstore.cl" href="http://www.samsungstore.cl/">
       Samsung Store
-    </author>
+  </author>
+  <plugin name="cordova-plugin-whitelist" version="1" />
+  
   <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
