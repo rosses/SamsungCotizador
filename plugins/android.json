@@ -1,0 +1,43 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-custom-config": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-ble-central": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.abastible.terreno"
+        }
+    }
+}
