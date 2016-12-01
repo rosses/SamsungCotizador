@@ -109,9 +109,13 @@ angular.module('samsungcot.controllers', [])
     }
   };
 
+})
+
+
+.controller('MainCtrl', function($scope, $state, $localStorage, $location) {
 
   $scope.impActivar = function(item) {
-
+    console.log('imp');
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;
@@ -150,13 +154,6 @@ angular.module('samsungcot.controllers', [])
         });
     }
   };
-  
-})
-
-
-.controller('MainCtrl', function($scope, $state, $localStorage, $location) {
-  
-
 })
 
 .controller('LoginCtrl', function($scope, $ionicPopup, $ionicLoading, $localStorage, $state, $location) {
