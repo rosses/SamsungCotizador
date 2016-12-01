@@ -18,35 +18,39 @@ angular.module('samsungcot.controllers', [])
   $scope.cargandoPrinters = true;
   $scope.noPrinterFound = false;
   printers = [];
-  /*
-  ble.startScan([], function(device) {
-    printer = { nombre: device.name, id: device.id };
-    printers.push(printer);
-    var string = device.name,
-    substring = "SAMSTORECC";
-    if (string.indexOf(substring) !== -1) {
-      app.impID = device.id;
-      app.impNN = device.name;
-      $localStorage.app = app;
-    }
-  } , function() {
-    // ERR
-  });
 
-  $timeout(function() {
+  $scope.printRefresh = function() {
+    alert('printrefresh');
+    alert(JSON.stringify(ble));
+    ble.startScan([], function(device) {
+      printer = { nombre: device.name, id: device.id };
+      printers.push(printer);
+      var string = device.name,
+      substring = "SAMSTORECC";
+      if (string.indexOf(substring) !== -1) {
+        app.impID = device.id;
+        app.impNN = device.name;
+        $localStorage.app = app;
+      }
+    } , function() {
+      // ERR
+    });
 
-    $scope.cargandoPrinters = false;
-    $scope.printerList=printers;
+    $timeout(function() {
+      alert('timeout');
+      
+      $scope.cargandoPrinters = false;
+      $scope.printerList=printers;
 
-    if (printers.length == 0) {
-      $scope.noPrinterFound = true;
-    }
+      if (printers.length == 0) {
+        $scope.noPrinterFound = true;
+      }
 
-    ble.stopScan(function() {}, function() {});
+      ble.stopScan(function() {}, function() {});
 
-  },5000);
-  */
+    },5000);
 
+  };
 
   $scope.imprimir = function() {
     if (app.impNN != "") {
