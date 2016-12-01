@@ -150,6 +150,7 @@ angular.module('samsungcot.controllers', [])
         });
     }
   };
+  
 })
 
 
