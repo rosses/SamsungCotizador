@@ -111,6 +111,43 @@ angular.module('samsungcot.controllers', [])
       }, function(x) { 
         err('No se pudo imprimir '+JSON.stringify(x));
       });
+
+      var x1 = [0x01B, 0x40];
+      var x2 = [0x1B, 0x21, 3];
+      var x3 = "hola".toBytes();
+      var data = x1.concat(x2).concat(x3);
+      var buffer = new Uint8Array(data).buffer;
+
+      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
+        err('OK '+JSON.stringify(x));
+      }, function(x) { 
+        err('No se pudo imprimir '+JSON.stringify(x));
+      });
+
+      var x1 = [0x01B, 0x40];
+      var x4 = [0x1D, 0x6B];
+      var x5 = "014785".toBytes();
+      var data = x1.concat(x4).concat(x5);
+      var buffer = new Uint8Array(data).buffer;
+
+      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
+        err('OK '+JSON.stringify(x));
+      }, function(x) { 
+        err('No se pudo imprimir '+JSON.stringify(x));
+      });
+
+      var x4 = [0x1D, 0x6B];
+      var x5 = "014785".toBytes();
+      var data = x4.concat(x5);
+      var buffer = new Uint8Array(data).buffer;
+
+      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
+        err('OK '+JSON.stringify(x));
+      }, function(x) { 
+        err('No se pudo imprimir '+JSON.stringify(x));
+      });
+
+
     }
     else {
       err('No se ha configurado una impresora');
