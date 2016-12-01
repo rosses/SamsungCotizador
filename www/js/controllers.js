@@ -103,7 +103,7 @@ angular.module('samsungcot.controllers', [])
       var x3 = "hola".toBytes();
       var x4 = [0x1D, 0x6B];
       var x5 = "014785".toBytes();
-      var data = x1.concat(x2).concat(x3).concat(x4).concat(x5);
+      var data = x1.concat(x2).concat(x3).concat(x4).concat(x5).concat([0x01B, 0x64, 4]);
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
@@ -115,7 +115,7 @@ angular.module('samsungcot.controllers', [])
       var x1 = [0x01B, 0x40];
       var x2 = [0x1B, 0x21, 3];
       var x3 = "hola".toBytes();
-      var data = x1.concat(x2).concat(x3);
+      var data = x1.concat(x2).concat(x3).concat([0x01B, 0x64, 4]);
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
@@ -127,7 +127,7 @@ angular.module('samsungcot.controllers', [])
       var x1 = [0x01B, 0x40];
       var x4 = [0x1D, 0x6B];
       var x5 = "014785".toBytes();
-      var data = x1.concat(x4).concat(x5);
+      var data = x1.concat(x4).concat(x5).concat([0x01B, 0x64, 4]);
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
@@ -138,7 +138,7 @@ angular.module('samsungcot.controllers', [])
 
       var x4 = [0x1D, 0x6B];
       var x5 = "014785".toBytes();
-      var data = x4.concat(x5);
+      var data = x4.concat(x5).concat([0x01B, 0x64, 4]);
       var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
