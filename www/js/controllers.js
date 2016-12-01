@@ -58,6 +58,7 @@ angular.module('samsungcot.controllers', [])
   $scope.imprimir = function() {
     if (app.impNN != "") {
       alert('imprimir en '+app.impNN);
+      /*
       var buffer = new MutableBuffer();
       alert(buffer);
       var code = "00015742";
@@ -85,8 +86,15 @@ angular.module('samsungcot.controllers', [])
       ]);
 
       buffer.write(code);
+      */
+      //var barcode = [0x1d,0x6b,0x08];
+      var barcode = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10,"0123456789",String.fromCharCode(10)];
+                                                                                //tipo -> largo string
+      var data = "Test de impresion".toBytes().concat(barcode).concat([0x01B, 0x64, 4]);
+      var buffer = new Uint8Array(data).buffer;
 
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
+
         err('OK'); 
       }, function(x) { 
         err('No se pudo imprimir');
@@ -114,6 +122,7 @@ angular.module('samsungcot.controllers', [])
 
     ble.connect(app.impID, function(peripheral) {
       alert('conectado');
+      alert(JSON.stringify(peripheral));
       $location.path( "main/home", false ); 
       $ionicLoading.hide();
     }, function() { 
