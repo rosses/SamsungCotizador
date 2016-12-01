@@ -6,7 +6,7 @@ angular.module('samsungcot.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $state, $localStorage, $location) {
+.controller('HomeCtrl', function($scope, $state, $localStorage, $location, $timeout) {
   
   
   if (!$localStorage.app) { $localStorage.app = app;  }
@@ -18,11 +18,12 @@ angular.module('samsungcot.controllers', [])
   $scope.cargandoPrinters = true;
   $scope.noPrinterFound = false;
   printers = [];
+  $scope.printerList=printers;
 
   $scope.printRefresh = function() {
-    alert('printrefresh');
+    //alert('printrefresh');
     ble.startScan([], function(device) {
-      alert(JSON.stringify(device));
+      //alert(JSON.stringify(device));
       printer = { nombre: device.name, id: device.id };
       printers.push(printer);
       var string = device.name,
@@ -31,11 +32,12 @@ angular.module('samsungcot.controllers', [])
         app.impID = device.id;
         app.impNN = device.name;
         $localStorage.app = app;
+        alert('set default: '+device.id)
       }
     } , function(x) {
       // ERR
-      alert(JSON.stringify(x));
-    });
+      alert('err:'+JSON.stringify(x));
+    })
 
     $timeout(function() {
       alert('timeout');
@@ -49,7 +51,7 @@ angular.module('samsungcot.controllers', [])
 
       ble.stopScan(function() {}, function() {});
 
-    },5000);
+    },5000)
 
   };
 
