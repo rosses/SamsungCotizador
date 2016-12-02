@@ -407,6 +407,8 @@ function escpos (_raw) {
 		//var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
 		//text = encoder.encode(text);
 		//text = Array.prototype.slice.call(text);
+
+		/*
 		  if(width >= 1 || width <= 255){
 		    _barcode(cmds.BARCODE_WIDTH, _raw);
 		  }
@@ -426,12 +428,23 @@ function escpos (_raw) {
 		  //this.buffer.write(code);
 
 		  _barcode(code.length,_raw);
+		 */
+		  _barcode([0x1d], _raw);
 		  encoding = 'gbk';
 		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
+
+		  text = encoder.encode("k");
+		  text = Array.prototype.slice.call(text);
+		  console.log(text);
+		  _text(text, encoding, _raw);
+		  text = encoder.encode("C");
+		  text = Array.prototype.slice.call(text);
+		  _text(text, encoding, _raw);	
+
 		  text = encoder.encode(code);
 		  text = Array.prototype.slice.call(text);
 		  _text(text, encoding, _raw);
-
+		
 		return print;
 	};
 
