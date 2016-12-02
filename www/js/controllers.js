@@ -88,15 +88,19 @@ angular.module('samsungcot.controllers', [])
 
         escpos(_raw)
         .hw()
-        .set({align: 'center', width: 3, height: 3})
+        .set({align: 'center', width: 2, height: 2})
         .text('COTIZACION SAMSTORE')
         .newLine(1)
-        .set({align: 'left', width: 2, height: 2})
-        .text('COMPROBANTE PARA CAJA')
+        .set({align: 'left', width: 1, height: 1})
+        .text('COMPROBANTE VALIDO SOLO PARA CAJA')
         .newLine(1)
         .text('---------------------------')
         .newLine(3)
-        .barcode('123456','CODE39', 6, 3, 'BLW', 'A')
+        .barcode('123456789','CODE39', 120, 3, 'BLW', 'B')
+        .newLine(3)
+        .barcode('12345678900','CODE128', 150, 3, 'BLW', 'A')
+        .newLine(3)
+        .barcode('12345678900','CODE128', 120, 4, 'BLW', 'B')
         .cut();
 
         return buffer;
