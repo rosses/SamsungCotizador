@@ -122,7 +122,8 @@ angular.module('samsungcot.controllers', [])
         .set({align: 'left'})
         .text('ACERQUESE AL MESON CON ESTE COMPROBANTE')
         .newLine(3)
-        .barcode('13245678','CODE39');
+        .barcode('123','CODE39', 3, 3, 'BLW', 'A')
+        .cut();
 
         return buffer;
 
