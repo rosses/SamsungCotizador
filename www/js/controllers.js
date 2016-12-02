@@ -118,9 +118,11 @@ angular.module('samsungcot.controllers', [])
         escpos(_raw)
         .hw()
         .set({align: 'center'})
-        .text('welcome')
-        .cut()
-        ;
+        .text('COTIZACION SAMSTORE')
+        .set({align: 'left'})
+        .text('ACERQUESE AL MESON CON ESTE COMPROBANTE')
+        .newLine(3)
+        .barcode('13245678','CODE39');
 
         return buffer;
 

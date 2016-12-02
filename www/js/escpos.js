@@ -97,7 +97,31 @@ var cmds = {
 	QR_SIZE: [0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x43], // QRCODE SIZE
 	QR_ERRLEVEL: [29, 40, 107, 3, 0, 49, 69, 51], // QRCODE ERROR TOLERRENCE LEVEL
 	QR_WRITER_BUFFER: [0x1d, 0x28, 0x6b, 0x2e, 0x00, 0x31, 0x50, 0x30],
-	QR_PRINT: [0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x51, 0x30]
+	QR_PRINT: [0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x51, 0x30],
+
+	// ADD ROSSES - rosses@gmail.com
+
+	  BARCODE_TXT_OFF : [0x1d, 0x48, 0x00], // HRI barcode chars OFF
+	  BARCODE_TXT_ABV : [0x1d, 0x48, 0x01], // HRI barcode chars above
+	  BARCODE_TXT_BLW : [0x1d, 0x48, 0x02], // HRI barcode chars below
+	  BARCODE_TXT_BTH : [0x1d, 0x48, 0x03], // HRI barcode chars both above and below
+
+	  BARCODE_FONT_A  : [0x1d, 0x66, 0x00], // Font type A for HRI barcode chars
+	  BARCODE_FONT_B  : [0x1d, 0x66, 0x01] , // Font type B for HRI barcode chars
+
+	  BARCODE_HEIGHT  : [0x1d, 0x68, 0x64] , // Barcode Height [1-255]
+	  BARCODE_WIDTH   : [0x1d, 0x77, 0x03], // Barcode Width  [2-6]
+
+	  BARCODE_UPC_A   : [0x1d, 0x6b, 0x00], // Barcode type UPC-A
+	  BARCODE_UPC_E   : [0x1d, 0x6b, 0x01], // Barcode type UPC-E
+	  BARCODE_EAN13   : [0x1d, 0x6b, 0x02], // Barcode type EAN13
+	  BARCODE_EAN8    : [0x1d, 0x6b, 0x03], // Barcode type EAN8
+	  BARCODE_CODE39  : [0x1d, 0x6b, 0x04], // Barcode type CODE39
+	  BARCODE_ITF     : [0x1d, 0x6b, 0x05], // Barcode type ITF
+	  BARCODE_NW7     : [0x1d, 0x6b, 0x06], // Barcode type NW7
+	  BARCODE_CODE93  : [0x1d, 0x6b, 0x07], // Barcode type CODE93
+	  BARCODE_CODE128 : [0x1d, 0x6b, 0x08]  // Barcode type CODE128
+
 }
 
 
@@ -210,6 +234,11 @@ function _image (img, config, _raw) {
 }
 
 function _text (text, encoding, _raw) {
+	var buf = text;
+	_raw(buf);
+}
+
+function _barcode (text, _raw) {
 	var buf = text;
 	_raw(buf);
 }
@@ -369,6 +398,37 @@ function escpos (_raw) {
 		text = encoder.encode(text);
 		text = Array.prototype.slice.call(text);
 		_text(text, encoding, _raw);
+		return print;
+	};
+
+	print.barcode = function(code, type, width, height, position, font) {
+		//encoding = encoding || 'gbk';
+		//var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
+		//text = encoder.encode(text);
+		//text = Array.prototype.slice.call(text);
+		  if(width >= 1 || width <= 255){
+		    _barcode(cmds.BARCODE_WIDTH, _raw);
+		  }
+		  if(height >=2  || height <= 6){
+		    _barcode(cmds.BARCODE_HEIGHT, _raw);
+		  }
+		  
+		  _barcode(cmds[
+		    'BARCODE_FONT_' + (font || 'A').toUpperCase()
+		  ], _raw);
+		  _barcode(cmds[
+		    'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
+		  ], _raw);
+		  _barcode(cmds[
+		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
+		  ], _raw);
+		  //this.buffer.write(code);
+		  encoding = 'gbk';
+		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
+		  text = encoder.encode(code);
+		  text = Array.prototype.slice.call(text);
+		  _text(text, encoding, _raw);
+
 		return print;
 	};
 
