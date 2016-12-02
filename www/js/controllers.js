@@ -76,8 +76,7 @@ angular.module('samsungcot.controllers', [])
   };
 
   $scope.imprimir = function() {
-    if (app.impNN != "") {
-      //alert('imprimir en '+app.impNN);
+    //if (app.impNN != "") {
       function objetoImprimir() {
 
         var buffer = [];
@@ -88,19 +87,19 @@ angular.module('samsungcot.controllers', [])
 
         escpos(_raw)
         .hw()
-        .set({align: 'center', width: 2, height: 2})
-        .text('COTIZACION SAMSTORE')
+        .set({align: 'center', width: 1, height: 2})
+        .text('COTIZACION')
         .newLine(1)
         .set({align: 'left', width: 1, height: 1})
-        .text('COMPROBANTE VALIDO SOLO PARA CAJA')
+        .text('COMPROBANTE PARA CAJA')
         .newLine(1)
         .text('---------------------------')
-        .newLine(3)
-        .barcode('123456789','CODE39', 120, 3, 'BLW', 'B')
-        .newLine(3)
-        .barcode('12345678900','CODE128', 150, 3, 'BLW', 'A')
-        .newLine(3)
-        .barcode('12345678900','CODE128', 120, 4, 'BLW', 'B')
+        .newLine(1)
+        .barcode('1234567890123','EAN13', 90)
+        //.newLine(3)
+        //.barcode('12345678900','CODE128', 150, 3, 'BLW', 'A')
+        //.newLine(3)
+        //.barcode('12345678900','CODE128', 120, 4, 'BLW', 'B')
         .cut();
 
         return buffer;
@@ -108,6 +107,8 @@ angular.module('samsungcot.controllers', [])
       };
 
       var buffer = new Uint8Array(objetoImprimir()).buffer;
+      var x = new Uint8Array(objetoImprimir());
+      console.log(x);
 
       ble.isConnected(app.impID, function() {
         ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) {  err('OK '+JSON.stringify(x)); }, function(x) { err('No se pudo imprimir '+JSON.stringify(x)); });
@@ -123,10 +124,10 @@ angular.module('samsungcot.controllers', [])
 
       });
 
-    }
+    /*}
     else {
       err('No se ha configurado una impresora');
-    }
+    }*/
   };
 
 

@@ -101,26 +101,27 @@ var cmds = {
 
 	// ADD ROSSES - rosses@gmail.com
 
-	  BARCODE_TXT_OFF : [0x1d, 0x48, 0x00], // HRI barcode chars OFF
-	  BARCODE_TXT_ABV : [0x1d, 0x48, 0x01], // HRI barcode chars above
-	  BARCODE_TXT_BLW : [0x1d, 0x48, 0x02], // HRI barcode chars below
-	  BARCODE_TXT_BTH : [0x1d, 0x48, 0x03], // HRI barcode chars both above and below
+	BARCODE_TXT_OFF : [0x1d, 0x48, 0x00], // HRI barcode chars OFF
+	BARCODE_TXT_ABV : [0x1d, 0x48, 0x01], // HRI barcode chars above
+	BARCODE_TXT_BLW : [0x1d, 0x48, 0x02], // HRI barcode chars below
+	BARCODE_TXT_BTH : [0x1d, 0x48, 0x03], // HRI barcode chars both above and below
 
-	  BARCODE_FONT_A  : [0x1d, 0x66, 0x00], // Font type A for HRI barcode chars
-	  BARCODE_FONT_B  : [0x1d, 0x66, 0x01] , // Font type B for HRI barcode chars
+	BARCODE_FONT_A  : [0x1d, 0x66, 0x00], // Font type A for HRI barcode chars
+	BARCODE_FONT_B  : [0x1d, 0x66, 0x01] , // Font type B for HRI barcode chars
 
-	  BARCODE_HEIGHT  : [0x1d, 0x68, 0x64] , // Barcode Height [1-255]
-	  BARCODE_WIDTH   : [0x1d, 0x77, 0x03], // Barcode Width  [2-6]
+	BARCODE_HEIGHT  : [0x1d, 0x68, 0x64] , // Barcode Height [1-255]
+	BARCODE_WIDTH   : [0x1d, 0x77, 0x03], // Barcode Width  [2-6]
 
-	  BARCODE_UPC_A   : [0x1d, 0x6b, 0x00], // Barcode type UPC-A
-	  BARCODE_UPC_E   : [0x1d, 0x6b, 0x01], // Barcode type UPC-E
-	  BARCODE_EAN13   : [0x1d, 0x6b, 0x02], // Barcode type EAN13
-	  BARCODE_EAN8    : [0x1d, 0x6b, 0x03], // Barcode type EAN8
-	  BARCODE_CODE39  : [0x1d, 0x6b, 0x04], // Barcode type CODE39
-	  BARCODE_ITF     : [0x1d, 0x6b, 0x05], // Barcode type ITF
-	  BARCODE_NW7     : [0x1d, 0x6b, 0x06], // Barcode type NW7
-	  BARCODE_CODE93  : [0x1d, 0x6b, 0x07], // Barcode type CODE93
-	  BARCODE_CODE128 : [0x1d, 0x6b, 0x08]  // Barcode type CODE128
+	BARCODE_UPC_A   : [0x1d, 0x6b, 0x00], // Barcode type UPC-A
+	BARCODE_UPC_E   : [0x1d, 0x6b, 0x01], // Barcode type UPC-E
+	BARCODE_EAN13   : [0x1d, 0x6b, 0x02], // Barcode type EAN13
+	BARCODE_JAN13   : [0x1d, 0x6b, 0x02], // Barcode type JAN13
+	BARCODE_EAN8    : [0x1d, 0x6b, 0x03], // Barcode type EAN8
+	BARCODE_CODE39  : [0x1d, 0x6b, 0x04], // Barcode type CODE39
+	BARCODE_ITF     : [0x1d, 0x6b, 0x05], // Barcode type ITF
+	BARCODE_NW7     : [0x1d, 0x6b, 0x06], // Barcode type NW7
+	BARCODE_CODE93  : [0x1d, 0x6b, 0x07], // Barcode type CODE93
+	BARCODE_CODE128 : [0x1d, 0x6b, 0x08]  // Barcode type CODE128
 
 }
 
@@ -423,6 +424,8 @@ function escpos (_raw) {
 		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
 		  ], _raw);
 		  //this.buffer.write(code);
+
+		  _barcode(code.length);
 		  encoding = 'gbk';
 		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
 		  text = encoder.encode(code);
