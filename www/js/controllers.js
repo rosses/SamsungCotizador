@@ -93,9 +93,10 @@ angular.module('samsungcot.controllers', [])
       buffer.write(code);
       */
       //var barcode = [0x1d,0x6b,0x08];
-      //var barcode = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10,"0123456789",String.fromCharCode(10)];
-                                                
-                                                                                //tipo -> largo string
+      /*
+      var b1 = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10];
+      var b2 = "0123456789".toBytes().concat([String.fromCharCode(10),0x01B, 0x64, 4]);
+      var b = b1.concat(b2);
 
       //var data = "Test de impresion".toBytes().concat(barcode).concat([0x01B, 0x64, 4]);
       var x1 = [0x01B, 0x40];
@@ -104,43 +105,27 @@ angular.module('samsungcot.controllers', [])
       var x4 = [0x1D, 0x6B];
       var x5 = "014785".toBytes();
       var data = x1.concat(x2).concat(x3).concat(x4).concat(x5).concat([0x01B, 0x64, 4]);
-      var buffer = new Uint8Array(data).buffer;
+      var buffer = new Uint8Array(welcome()).buffer;
+*/
+      function welcome() {
 
-      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
-        err('OK '+JSON.stringify(x));
-      }, function(x) { 
-        err('No se pudo imprimir '+JSON.stringify(x));
-      });
+        var buffer = [];
 
-      var x1 = [0x01B, 0x40];
-      var x2 = [0x1B, 0x21, 3];
-      var x3 = "hola".toBytes();
-      var data = x1.concat(x2).concat(x3).concat([0x01B, 0x64, 4]);
-      var buffer = new Uint8Array(data).buffer;
+        function _raw (buf) {
+          buffer = buffer.concat(buf)
+        }
 
-      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
-        err('OK '+JSON.stringify(x));
-      }, function(x) { 
-        err('No se pudo imprimir '+JSON.stringify(x));
-      });
+        escpos(_raw)
+        .hw()
+        .set({align: 'center'})
+        .text('welcome')
+        .cut()
+        ;
 
-      var x1 = [0x01B, 0x40];
-      var x4 = [0x1D, 0x6B];
-      var x5 = "014785".toBytes();
-      var data = x1.concat(x4).concat(x5).concat([0x01B, 0x64, 4]);
-      var buffer = new Uint8Array(data).buffer;
+        return buffer;
 
-      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
-        err('OK '+JSON.stringify(x));
-      }, function(x) { 
-        err('No se pudo imprimir '+JSON.stringify(x));
-      });
-
-      var x4 = [0x1D, 0x6B];
-      var x5 = "014785".toBytes();
-      var data = x4.concat(x5).concat([0x01B, 0x64, 4]);
-      var buffer = new Uint8Array(data).buffer;
-
+      };
+      var buffer = new Uint8Array(welcome()).buffer;
       ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
         err('OK '+JSON.stringify(x));
       }, function(x) { 
@@ -260,3 +245,4 @@ String.prototype.toBytes = function() {
     }
     return arr
 }
+
