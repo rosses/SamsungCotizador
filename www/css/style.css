@@ -1,0 +1,10 @@
+.col {
+	border: thin solid black !important
+}
+.hd {
+	background-color: #d0dffd;
+}
+.vacio {
+	font-size: 16px;
+	color: #003399;
+}

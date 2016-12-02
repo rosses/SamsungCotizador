@@ -29,11 +29,11 @@
 	    <ion-list>
 	      <ion-radio ng-repeat="printer in printerList" data-nombre="{{printer.nombre}}" ng-click="impActivar($event)" ng-model="printerbox.sel" ng-value="printer.id">{{printer.nombre}}</ion-radio>
 	    </ion-list>
-
+      <br /><br />
 	    <div class="loading text-center" ng-show="cargandoPrinters">
 	      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 	    </div>
-
+      <br /><br />
 	    <div class="text-center">
 	      <button class="button button-positive" ng-click="printRefresh();">REFRESCAR</button>
 	    </div>

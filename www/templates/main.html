@@ -1,8 +1,40 @@
 <ion-view view-title="Cotizador">
   <ion-content>
   	<br /><br />
+  	<div class="text-right">
+  	<button ng-click="agregarProducto()" class="button button-positive">Agregar producto a la cotización</button>
+  	</div>
   	<div class="text-center">
-    <button ng-click="imprimir()" class="button button-dark">Imprimir</button>
+  	<h2>Resumen de la cotización</h2>
+  	<br /><br />
+  	</div>
+
+	<div class="row">
+	  <div class="col hd"><b>SKU</b></div>
+	  <div class="col hd"><b>Producto</b></div>
+	  <div class="col hd"><b>Stock</b></div>
+	  <div class="col hd"><b>Cantidad</b></div>
+	  <div class="col hd"><b>Precio Venta</b></div>
+	  <div class="col hd"><b>Precio Total</b></div>
+	</div>
+
+	<div class="row" ng-repeat="producto in Productos">
+	  <div class="col"><b>{{producto.sku}}</b></div>
+	  <div class="col"><b>{{producto.nombre}}</b></div>  
+	  <div class="col"><b>{{producto.stock}}</b></div>
+	  <div class="col"><b>{{producto.cantidad}}</b></div>
+	  <div class="col"><b>{{producto.precio}}</b></div>
+	  <div class="col"><b>{{producto.total}}</b></div>
+	</div>
+
+	<div class="row" ng-show="!Productos.length">
+	<div class="col vacio">No hay productos en esta cotización</div>
+	</div>
+
+
+	<br /><br />
+  	<div class="text-center">
+    	<button ng-click="imprimir()" class="button button-dark">Imprimir códigos</button>
     </div>
     <br /><br />
   </ion-content>

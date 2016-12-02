@@ -6,7 +6,7 @@ angular.module('samsungcot.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $state, $localStorage, $location, $timeout) {
+.controller('HomeCtrl', function($scope, $state, $localStorage, $location, $timeout, $ionicLoading) {
   
   
   if (!$localStorage.app) { $localStorage.app = app;  }
@@ -14,10 +14,25 @@ angular.module('samsungcot.controllers', [])
       $location.path( "login", false );
   }
   
+
+
+  $scope.showload = function() {
+    $ionicLoading.show({
+      template: '<ion-spinner></ion-spinner>'
+    }).then(function(){
+       //console.log("The loading indicator is now displayed");
+    });
+  };
+  $scope.hideload = function(){
+    $ionicLoading.hide().then(function(){
+       //console.log("The loading indicator is now hidden");
+    });
+  };
+  
   $scope.printerbox = {};
   $scope.cargandoPrinters = false;
   $scope.noPrinterFound = false;
-  printers = [{nombre: 'hola', id:'chao'}];
+  printers = [];
   $scope.printerList=printers;
 
   $scope.printRefresh = function() {
@@ -62,52 +77,8 @@ angular.module('samsungcot.controllers', [])
 
   $scope.imprimir = function() {
     if (app.impNN != "") {
-      alert('imprimir en '+app.impNN);
-      /*
-      var buffer = new MutableBuffer();
-      alert(buffer);
-      var code = "00015742";
-      var type = "CODE128";
-      var width = 200;
-      var height = 4;
-      var position = "BLW";
-      var font = "A";
-
-      if(width >= 1 || width <= 255){
-        buffer.write(_.BARCODE_FORMAT.BARCODE_WIDTH);
-      }
-      if(height >=2  || height <= 6){
-        buffer.write(_.BARCODE_FORMAT.BARCODE_HEIGHT);
-      }
-
-      buffer.write(_.BARCODE_FORMAT[
-        'BARCODE_FONT_' + (font || 'A').toUpperCase()
-      ]);
-      buffer.write(_.BARCODE_FORMAT[
-        'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
-      ]);
-      buffer.write(_.BARCODE_FORMAT[
-        'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
-      ]);
-
-      buffer.write(code);
-      */
-      //var barcode = [0x1d,0x6b,0x08];
-      /*
-      var b1 = [0x1D,0x68,200,0x1D,0x77,5,0x1D,0x66,0,0x1D,0x48,1,0x1D,0x6B,8,10];
-      var b2 = "0123456789".toBytes().concat([String.fromCharCode(10),0x01B, 0x64, 4]);
-      var b = b1.concat(b2);
-
-      //var data = "Test de impresion".toBytes().concat(barcode).concat([0x01B, 0x64, 4]);
-      var x1 = [0x01B, 0x40];
-      var x2 = [0x1B, 0x21, 3];
-      var x3 = "hola".toBytes();
-      var x4 = [0x1D, 0x6B];
-      var x5 = "014785".toBytes();
-      var data = x1.concat(x2).concat(x3).concat(x4).concat(x5).concat([0x01B, 0x64, 4]);
-      var buffer = new Uint8Array(welcome()).buffer;
-*/
-      function welcome() {
+      //alert('imprimir en '+app.impNN);
+      function objetoImprimir() {
 
         var buffer = [];
 
@@ -117,24 +88,36 @@ angular.module('samsungcot.controllers', [])
 
         escpos(_raw)
         .hw()
-        .set({align: 'center'})
+        .set({align: 'center', width: 3, height: 3})
         .text('COTIZACION SAMSTORE')
-        .set({align: 'left'})
-        .text('ACERQUESE AL MESON CON ESTE COMPROBANTE')
+        .newLine(1)
+        .set({align: 'left', width: 2, height: 2})
+        .text('COMPROBANTE PARA CAJA')
+        .newLine(1)
+        .text('---------------------------')
         .newLine(3)
-        .barcode('123','CODE39', 3, 3, 'BLW', 'A')
+        .barcode('123456','CODE39', 6, 3, 'BLW', 'A')
         .cut();
 
         return buffer;
 
       };
-      var buffer = new Uint8Array(welcome()).buffer;
-      ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
-        err('OK '+JSON.stringify(x));
-      }, function(x) { 
-        err('No se pudo imprimir '+JSON.stringify(x));
-      });
 
+      var buffer = new Uint8Array(objetoImprimir()).buffer;
+
+      ble.isConnected(app.impID, function() {
+        ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) {  err('OK '+JSON.stringify(x)); }, function(x) { err('No se pudo imprimir '+JSON.stringify(x)); });
+      }, function() {
+
+        ble.connect(app.impID, function(peripheral) {
+          $scope.hideload();
+          ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { }, function(x) { err('No se pudo imprimir '+JSON.stringify(x)); });
+        }, function() { 
+          err('Problemas al conectar a su impresora. Valla a configuracion o intente mas tarde.');
+          $scope.hideload();
+        });
+
+      });
 
     }
     else {
@@ -150,20 +133,24 @@ angular.module('samsungcot.controllers', [])
     $localStorage.app = app;
 
     ble.isConnected(app.impID, function() {
-      alert('ya conectado, desconectar y conectar');
-      ble.disconnect(app.impID, function() { alert('desconectado conectamos denuevo'); conectar(); }, function() { alert('no desconectado'); });      
     }, function() {
-      alert('no conectado, conectar ahora');
-      conectar();
+        ble.connect(app.impID, function(peripheral) {
+          $scope.hideload();
+        }, function() { 
+          err('Problemas al conectar a su impresora. Valla a configuracion o intente mas tarde.');
+          $scope.hideload();
+        });
     });
   };
+
+  $scope.Productos = [];
 
 })
 
 
 .controller('MainCtrl', function($scope, $state, $localStorage, $location) {
 
-
+  
 })
 
 .controller('LoginCtrl', function($scope, $ionicPopup, $ionicLoading, $localStorage, $state, $location) {
@@ -220,17 +207,6 @@ angular.module('samsungcot.controllers', [])
   };
 });
 
-function conectar() {
-    ble.connect(app.impID, function(peripheral) {
-      alert('conectado');
-      alert(JSON.stringify(peripheral));
-      //$location.path( "main/home", false ); 
-      $ionicLoading.hide();
-    }, function() { 
-      err('Problemas al conectar a su impresora. Intente mas tarde.');
-      $ionicLoading.hide();
-    });
-}
 function err(msg) {
   console.log(msg);
   navigator.notification.alert(
