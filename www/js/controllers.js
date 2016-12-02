@@ -76,7 +76,7 @@ angular.module('samsungcot.controllers', [])
   };
 
   $scope.imprimir = function() {
-    //if (app.impNN != "") {
+    if (app.impNN != "") {
       function objetoImprimir() {
 
         var buffer = [];
@@ -95,7 +95,7 @@ angular.module('samsungcot.controllers', [])
         .newLine(1)
         .text('---------------------------')
         .newLine(1)
-        .barcode('1234567890123','EAN13', 90)
+        .barcode('1234567890123','EAN13', 90, 4, 'BLW', 'B')
         //.newLine(3)
         //.barcode('12345678900','CODE128', 150, 3, 'BLW', 'A')
         //.newLine(3)
@@ -107,8 +107,10 @@ angular.module('samsungcot.controllers', [])
       };
 
       var buffer = new Uint8Array(objetoImprimir()).buffer;
+      /*
       var x = new Uint8Array(objetoImprimir());
       console.log(x);
+      */
 
       ble.isConnected(app.impID, function() {
         ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) {  err('OK '+JSON.stringify(x)); }, function(x) { err('No se pudo imprimir '+JSON.stringify(x)); });
@@ -124,10 +126,10 @@ angular.module('samsungcot.controllers', [])
 
       });
 
-    /*}
+    }
     else {
       err('No se ha configurado una impresora');
-    }*/
+    }
   };
 
 

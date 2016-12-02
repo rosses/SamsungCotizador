@@ -425,7 +425,7 @@ function escpos (_raw) {
 		  ], _raw);
 		  //this.buffer.write(code);
 
-		  _barcode(code.length);
+		  _barcode(code.length,_raw);
 		  encoding = 'gbk';
 		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
 		  text = encoder.encode(code);
