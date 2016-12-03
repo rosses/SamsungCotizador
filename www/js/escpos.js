@@ -114,7 +114,7 @@ var cmds = {
 
 	BARCODE_UPC_A   : [0x1d, 0x6b, 0x00], // Barcode type UPC-A
 	BARCODE_UPC_E   : [0x1d, 0x6b, 0x01], // Barcode type UPC-E
-	BARCODE_EAN13   : [0x1d, 0x6b, 0x02], // Barcode type EAN13
+	BARCODE_EAN13   : [0x1d, 0x6b, 0x43, 0x0d], // Barcode type EAN13
 	BARCODE_JAN13   : [0x1d, 0x6b, 0x02], // Barcode type JAN13
 	BARCODE_EAN8    : [0x1d, 0x6b, 0x03], // Barcode type EAN8
 	BARCODE_CODE39  : [0x1d, 0x6b, 0x04], // Barcode type CODE39
@@ -403,10 +403,6 @@ function escpos (_raw) {
 	};
 
 	print.barcode = function(code, type, width, height, position, font) {
-		//encoding = encoding || 'gbk';
-		//var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
-		//text = encoder.encode(text);
-		//text = Array.prototype.slice.call(text);
 
 		/*
 		  if(width >= 1 || width <= 255){
@@ -422,28 +418,22 @@ function escpos (_raw) {
 		  _barcode(cmds[
 		    'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
 		  ], _raw);
+		  */
 		  _barcode(cmds[
 		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
 		  ], _raw);
-		  //this.buffer.write(code);
+		
+		  _barcode(code.toBytes(), _raw);
 
-		  _barcode(code.length,_raw);
-		 */
-		  _barcode([0x1d], _raw);
+		  _barcode(cmds[CTL_LF], _raw);
+		  /*
 		  encoding = 'gbk';
 		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
-
-		  text = encoder.encode("k");
-		  text = Array.prototype.slice.call(text);
-		  console.log(text);
-		  _text(text, encoding, _raw);
-		  text = encoder.encode("C");
-		  text = Array.prototype.slice.call(text);
-		  _text(text, encoding, _raw);	
-
 		  text = encoder.encode(code);
 		  text = Array.prototype.slice.call(text);
 		  _text(text, encoding, _raw);
+		  */
+
 		
 		return print;
 	};
