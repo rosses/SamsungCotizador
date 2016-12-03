@@ -106,10 +106,10 @@ angular.module('samsungcot.controllers', [])
       };
 
       var buffer = new Uint8Array(objetoImprimir()).buffer;
-      /*
+      
       var x = new Uint8Array(objetoImprimir());
-      console.log(x);
-      */
+      alert(json.stringify(x));
+      
 
       ble.isConnected(app.impID, function() {
         ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) {  err('OK '+JSON.stringify(x)); }, function(x) { err('No se pudo imprimir '+JSON.stringify(x)); });

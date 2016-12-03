@@ -433,8 +433,6 @@ function escpos (_raw) {
 		  text = Array.prototype.slice.call(text);
 		  _text(text, encoding, _raw);
 		  */
-
-		
 		return print;
 	};
 
