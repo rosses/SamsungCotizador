@@ -106,9 +106,8 @@ angular.module('samsungcot.controllers', [])
       };
 
       var buffer = new Uint8Array(objetoImprimir()).buffer;
-      
       var x = new Uint8Array(objetoImprimir());
-      alert(json.stringify(x));
+      alert(JSON.stringify(x));
       
 
       ble.isConnected(app.impID, function() {
@@ -134,6 +133,7 @@ angular.module('samsungcot.controllers', [])
 
   $scope.impActivar = function(item) {
   
+  	$scope.showload();
     app.impNN = item.currentTarget.getAttribute("data-nombre");
     app.impID = $scope.printerbox.sel;
     $localStorage.app = app;

@@ -425,7 +425,7 @@ function escpos (_raw) {
 		
 		  _barcode(code.toBytes(), _raw);
 
-		  _barcode(cmds[CTL_LF], _raw);
+		  _barcode(cmds.CTL_LF, _raw);
 		  /*
 		  encoding = 'gbk';
 		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
