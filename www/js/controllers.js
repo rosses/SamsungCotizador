@@ -2,7 +2,7 @@
 angular.module('samsungcot.controllers', [])
 
 .controller('AddCtrl', function($scope, $ionicScrollDelegate, filterFilter, $location, $anchorScroll) {
-	
+
   var letters = $scope.letters = [];
   var contacts = $scope.contacts = [];
   var currentCharCode = ' '.charCodeAt(0) - 1;
@@ -202,7 +202,7 @@ angular.module('samsungcot.controllers', [])
         .newLine(1)
         .text('---------------------------')
         .newLine(1)
-        .barcode(['1234567890123','8800252699821'],'EAN13', 4, 90, 'BLW', 'B')
+        .barcode(['1234567890123','8800252699821'],[3,1],'EAN13', 4, 90, 'BLW', 'B')
         .newLine(2);
         //.cut();
 
