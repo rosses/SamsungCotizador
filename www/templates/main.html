@@ -1,9 +1,8 @@
 <ion-view view-title="Cotizador">
   <ion-content>
   	<br /><br />
-  	<div class="text-right">
-  	<button ng-click="agregarProducto()" class="button button-positive">Agregar producto a la cotización</button>
-  	</div>
+  	<a ng-click="limpiarCotizacion()" class="button button-assertive pull-left">Limpiar</a>
+  	<a href="#/home/add" class="button button-positive pull-right">Agregar</a>
   	<div class="text-center">
   	<h2>Resumen de la cotización</h2>
   	<br /><br />
@@ -18,7 +17,7 @@
 	  <div class="col hd"><b>Precio Total</b></div>
 	</div>
 
-	<div class="row" ng-repeat="producto in Productos">
+	<div class="row" ng-repeat="producto in cotLista">
 	  <div class="col"><b>{{producto.sku}}</b></div>
 	  <div class="col"><b>{{producto.nombre}}</b></div>  
 	  <div class="col"><b>{{producto.stock}}</b></div>
@@ -34,7 +33,7 @@
 
 	<br /><br />
   	<div class="text-center">
-    	<button ng-click="imprimir()" class="button button-dark">Imprimir códigos</button>
+    	<button ng-click="imprimir()" class="button button-royal">Imprimir códigos</button>
     </div>
     <br /><br />
   </ion-content>

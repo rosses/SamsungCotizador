@@ -51,6 +51,16 @@ angular.module('samsungcot', ['ionic', 'samsungcot.controllers','ngStorage'])
       }
     }
   })
+
+  .state('home.add', {
+    url: '/add',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add.html',
+        controller: 'AddCtrl'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 });

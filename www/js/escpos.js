@@ -402,8 +402,7 @@ function escpos (_raw) {
 		return print;
 	};
 
-	print.barcode = function(code, type, width, height, position, font) {
-
+	print.barcode = function(codes, type, width, height, position, font) {
 		/*
 		  if(width >= 1 || width <= 255){
 		    _barcode(cmds.BARCODE_WIDTH, _raw);
@@ -418,27 +417,19 @@ function escpos (_raw) {
 		  _barcode(cmds[
 		    'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
 		  ], _raw);
-		  */
-
-		  // centrar
-		  _barcode([0x1B, 0x61, 01], _raw);
-
-		  // barcode h
-		  _barcode([0x1D, 0x68, height], _raw);
-
-		  _barcode(cmds[
-		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
-		  ], _raw);
-
-		
-		  _barcode(code.toBytes(), _raw);
-
-		  _barcode(cmds.CTL_CR, _raw);
-
-		  _barcode(code.toBytes(), _raw);
-
-		  _barcode(cmds.CTL_LF, _raw);
-
+		*/
+		for (i=0; i<codes.length; i++) {
+			var code = codes[i];
+			// centrar
+			_barcode([0x1B, 0x61, 01], _raw);
+			// barcode h
+			_barcode([0x1D, 0x68, height], _raw);
+			_barcode(cmds['BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())], _raw);
+			_barcode(code.toBytes(), _raw);
+			_barcode(cmds.CTL_CR, _raw);
+			_barcode(code.toBytes(), _raw);
+			_barcode(cmds.CTL_LF, _raw);
+		}
 		return print;
 	};
 
