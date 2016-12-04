@@ -422,7 +422,14 @@ function escpos (_raw) {
 		  _barcode(cmds[
 		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
 		  ], _raw);
+
+		  //1D 68 5A 1B 61 01 // 90 altura
+		  _barcode([0x1D, 0x68, 0x5A, 0x1B, 0x61, 0x01], _raw);
 		
+		  _barcode(code.toBytes(), _raw);
+
+		  _barcode(cmds.CTL_LF, _raw);
+
 		  _barcode(code.toBytes(), _raw);
 
 		  _barcode(cmds.CTL_LF, _raw);
