@@ -419,35 +419,26 @@ function escpos (_raw) {
 		    'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
 		  ], _raw);
 		  */
-		  // GS   h    n     (tamaño)
-		  //_barcode([0x1D, 0x68, 0x5A, 0x1B, 0x61, 0x01], _raw);
 
 		  // centrar
 		  _barcode([0x1B, 0x61, 01], _raw);
 
-		  // barcode 90
-		  _barcode([0x1D, 0x68, 90], _raw);
+		  // barcode h
+		  _barcode([0x1D, 0x68, height], _raw);
 
 		  _barcode(cmds[
 		    'BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())
 		  ], _raw);
 
-		  //1D 68 5A 1B 61 01 // 90 altura
 		
 		  _barcode(code.toBytes(), _raw);
 
-		  _barcode(cmds.CTL_LF, _raw);
+		  _barcode(cmds.CTL_CR, _raw);
 
 		  _barcode(code.toBytes(), _raw);
 
 		  _barcode(cmds.CTL_LF, _raw);
-		  /*
-		  encoding = 'gbk';
-		  var encoder = new TextEncoder(encoding, {NONSTANDARD_allowLegacyEncoding: true});
-		  text = encoder.encode(code);
-		  text = Array.prototype.slice.call(text);
-		  _text(text, encoding, _raw);
-		  */
+
 		return print;
 	};
 

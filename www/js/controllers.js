@@ -94,12 +94,13 @@ angular.module('samsungcot.controllers', [])
         .newLine(1)
         .text('---------------------------')
         .newLine(1)
-        .barcode('1234567890123','EAN13', 90, 4, 'BLW', 'B')
-        //.newLine(3)
+        .barcode('1234567890123','EAN13', 4, 90, 'BLW', 'B')
+        .barcode('8800252699821','EAN13', 4, 90, 'BLW', 'B')
+        .newLine(2);
         //.barcode('12345678900','CODE128', 150, 3, 'BLW', 'A')
         //.newLine(3)
         //.barcode('12345678900','CODE128', 120, 4, 'BLW', 'B')
-        .cut();
+        //.cut();
 
         return buffer;
 
