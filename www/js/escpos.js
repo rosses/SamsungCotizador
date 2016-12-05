@@ -223,9 +223,9 @@ function _convert_image (img, _raw) {
 
 }
 
-function _dataUrl (dataUrl, _raw) {
+function _dataUrl (dataUrl, config, _raw) {
 	var img = getImgFromDataUrl(dataUrl);
-	var im = getImageData(img);
+	var im = getImageData(img, config);
 	_convert_image(im, _raw);
 }
 
@@ -426,7 +426,7 @@ function escpos (_raw) {
 		for (i=0; i<codes.length; i++) {
 			var code = codes[i];
 			var uri = "http://www.barcodes4.me/barcode/c39/"+code+".png"
-			_image(url, {}, _raw);
+			_dataUrl(uri, {width: 250, height: 100}, _raw);
 			_text((codes[i]+' x '+qty[i]).toBytes(), '', _raw);
 		}
 		return print;

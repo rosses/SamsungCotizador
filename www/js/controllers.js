@@ -105,9 +105,9 @@ angular.module('samsungcot.controllers', [])
 
 	$scope.agregarProducto = function() {
 
-		//$state.go('home.add',{search: 'j7'});
+		$state.go('home.add',{search: 'j7'});
 		
-    navigator.notification.prompt(
+    /*navigator.notification.prompt(
         'Ingrese texto a buscar',  // message
         function(results) { 
         	if (results.buttonIndex == 1) {
@@ -121,7 +121,7 @@ angular.module('samsungcot.controllers', [])
         },                  // callback to invoke
         'Agregar producto',            // title
         ['Ok','Cancelar']              // buttonLabels
-    );
+    );*/
     
 	};
 
@@ -208,7 +208,6 @@ angular.module('samsungcot.controllers', [])
       function objetoImprimir() {
 
         var buffer = [];
-        console.log($scope.getCodigos());
         function _raw (buf) {
           buffer = buffer.concat(buf)
         }
@@ -230,8 +229,10 @@ angular.module('samsungcot.controllers', [])
       };
 
       var buffer = new Uint8Array(objetoImprimir()).buffer;
-      /*var x = new Uint8Array(objetoImprimir());
-      alert(JSON.stringify(x));*/
+      /*
+      var x = new Uint8Array(objetoImprimir());
+      alert(JSON.stringify(x));
+      */
       
 
       ble.isConnected(app.impID, function() {
