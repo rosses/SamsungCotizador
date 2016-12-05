@@ -184,7 +184,21 @@ angular.module('samsungcot.controllers', [])
     },5000)
 
   };
+  $scope.getCodigos = function() {
+  	var ret = [];
+		for (var i = 0; i < $scope.cotLista.length ; i++) {
+			ret.push($scope.cotLista[i].codigo);
+		}
+		return ret;
+  }
 
+  $scope.getCantidades = function() {
+  	var ret = [];
+		for (var i = 0; i < $scope.cotLista.length ; i++) {
+			ret.push($scope.cotLista[i].cantidad);
+		}
+		return ret;
+  }
 
   $scope.imprimir = function() {
   	if ($scope.cotLista.length == 0) {
@@ -194,7 +208,7 @@ angular.module('samsungcot.controllers', [])
       function objetoImprimir() {
 
         var buffer = [];
-
+        console.log($scope.getCodigos());
         function _raw (buf) {
           buffer = buffer.concat(buf)
         }
@@ -208,7 +222,7 @@ angular.module('samsungcot.controllers', [])
         .newLine(1)
         .text('---------------------------')
         .newLine(1)
-        .barcode(['1234567890123','8800252699821'],[3,1],'EAN13', 4, 90, 'BLW', 'B')
+        .barcode($scope.getCodigos(),$scope.getCantidades(),'EAN13', 4, 90, 'BLW', 'B')
         .cut();
 
         return buffer;
