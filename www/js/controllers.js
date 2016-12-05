@@ -93,12 +93,12 @@ angular.module('samsungcot.controllers', [])
     navigator.notification.confirm(
         'Esta seguro?',  // message
         function(buttonIndex) {
-        	if (buttonIndex == 0) {
+        	if (buttonIndex == 1) {
         		$scope.cotLista = [];
         	}
         },              // callback to invoke with index of button pressed
         'Limpiar cotizacion',            // title
-        'Ok,Exit'          // buttonLabels
+        'Si,No'          // buttonLabels
     );
 		
 	};
@@ -110,8 +110,7 @@ angular.module('samsungcot.controllers', [])
     navigator.notification.prompt(
         'Ingrese texto a buscar',  // message
         function(results) { 
-        	alert(JSON.stringify(results));
-        	if (results.buttonIndex == 0) {
+        	if (results.buttonIndex == 1) {
         		if (results.input1.length > 1) {
         			$state.go('home.add',{search: results.input1});
         		}
