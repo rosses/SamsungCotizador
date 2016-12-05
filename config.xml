@@ -56,7 +56,6 @@
     <allow-intent href="market:*"/>
   </platform>
   <platform name="ios">
-    <plugin name="Notification" value="CDVNotification" />
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
     <config-file parent="UIBackgroundModes" target="*-Info.plist">
@@ -65,7 +64,6 @@
       </array>
     </config-file>
   </platform>
-  <plugin name="Notification" value="org.apache.cordova.Notification"/>
   <plugin name="cordova-plugin-statusbar" />
   <plugin name="cordova-custom-config" spec="1.2.6"/>
   <plugin name="cordova-plugin-dialogs" spec="1.2.1"/>
