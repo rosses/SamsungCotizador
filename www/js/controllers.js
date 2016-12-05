@@ -110,6 +110,7 @@ angular.module('samsungcot.controllers', [])
     navigator.notification.prompt(
         'Ingrese texto a buscar',  // message
         function(results) { 
+        	alert(JSON.stringify(results));
         	if (results.buttonIndex == 0) {
         		if (results.input1.length > 1) {
         			$state.go('home.add',{search: results.input1});
