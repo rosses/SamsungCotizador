@@ -401,23 +401,9 @@ function escpos (_raw) {
 		_text(text, encoding, _raw);
 		return print;
 	};
-
+	/*
 	print.barcode = function(codes, qty, type, width, height, position, font) {
-		/*
-		  if(width >= 1 || width <= 255){
-		    _barcode(cmds.BARCODE_WIDTH, _raw);
-		  }
-		  if(height >=2  || height <= 6){
-		    _barcode(cmds.BARCODE_HEIGHT, _raw);
-		  }
-		  
-		  _barcode(cmds[
-		    'BARCODE_FONT_' + (font || 'A').toUpperCase()
-		  ], _raw);
-		  _barcode(cmds[
-		    'BARCODE_TXT_' + (position || 'BLW').toUpperCase()
-		  ], _raw);
-		*/
+
 		// centrar
 		_barcode([0x1B, 0x61, 01], _raw);
 		// barcode h
@@ -434,6 +420,18 @@ function escpos (_raw) {
 		}
 		return print;
 	};
+
+	*/
+	print.barcode = function(codes, qty, type, width, height, position, font) {
+		for (i=0; i<codes.length; i++) {
+			var code = codes[i];
+			var uri = "http://www.barcodes4.me/barcode/c39/"+code+".png"
+			_image(url, {}, _raw);
+			_text((codes[i]+' x '+qty[i]).toBytes(), '', _raw);
+		}
+		return print;
+	}
+	
 
 	print.chinese2x = function(flag) {
 		var n = flag ? 1 : 0;
