@@ -53,7 +53,7 @@ angular.module('samsungcot', ['ionic', 'samsungcot.controllers','ngStorage'])
   })
 
   .state('home.add', {
-    url: '/add',
+    url: '/add/:search',
     views: {
       'menuContent': {
         templateUrl: 'templates/add.html',

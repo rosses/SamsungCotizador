@@ -1,29 +1,17 @@
-<ion-view view-title="Cotizador">
+<ion-view view-title="Agregar producto" class="addProducto">
   <ion-content>
-   <ion-header-bar class="bar-light bar-subheader">
-      <input type="search"
-             placeholder="Buscar..."
-             ng-model="search"
-             ng-focus="searchFocused = true"
-             ng-blur="searchFocused = false"
-             ng-change="scrollTop()"
-             class="full-width">
-      <button ng-if="search.length"
-              class="button button-icon ion-android-close input-button"
-              ng-click="clearSearch()">
-      </button>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item class="my-item"
-           ng-repeat="item in getContacts()"
-           item-height="getItemHeight(item)"
-           id="{{ item.isLetter ? (item.letter + '_divider') : ''}}"
-           ng-style="{'line-height': getItemHeight(item) + 'px'}"
-           ng-class="{'item-divider': item.isLetter}">
-          <img ng-if="!item.isLetter" ng-src="http://placekitten.com/60/{{55 + ($index % 10)}}">
-          {{item.letter || (item.first_name+' '+item.last_name)}}
-        </ion-item>
-      </ion-list>
+    <ion-list>
+      <ion-radio ng-repeat="item in resList" ng-model="addprod.sel" ng-value="item">
+      	<div class="d">{{item.descripcion}}</div>
+      	<div class="azul">Stock: {{item.stock}}</div>
+      	<div class="negro">Precio: $ {{item.precio}}</div>
+      </ion-radio>
+    </ion-list>
+    <br />
+    <div class="text-center">
+	    <button ng-click="agregarSeleccion()" class="button button-assertive">Agregar</button>
+	    <button ng-click="cancelarAgregar()" class="button button-stable">Cancelar</button>
+	</div>
+    <br /><br /><br />
   </ion-content>
 </ion-view>

@@ -1,14 +1,15 @@
 <ion-view view-title="Cotizador">
   <ion-content>
   	<br /><br />
-  	<a ng-click="limpiarCotizacion()" class="button button-assertive pull-left">Limpiar</a>
-  	<a href="#/home/add" class="button button-positive pull-right">Agregar</a>
+  	<button ng-click="limpiarCotizacion()" class="button button-assertive pull-left">Limpiar</button>
+  	<button ng-click="agregarProducto()" class="button button-positive pull-right">Agregar</button>
   	<div class="text-center">
   	<h2>Resumen de la cotización</h2>
   	<br /><br />
   	</div>
 
 	<div class="row">
+	  <div class="col col-10 hd"><b>Borrar</b></div>
 	  <div class="col hd"><b>SKU</b></div>
 	  <div class="col hd"><b>Producto</b></div>
 	  <div class="col hd"><b>Stock</b></div>
@@ -17,23 +18,41 @@
 	  <div class="col hd"><b>Precio Total</b></div>
 	</div>
 
-	<div class="row" ng-repeat="producto in cotLista">
-	  <div class="col"><b>{{producto.sku}}</b></div>
-	  <div class="col"><b>{{producto.nombre}}</b></div>  
-	  <div class="col"><b>{{producto.stock}}</b></div>
-	  <div class="col"><b>{{producto.cantidad}}</b></div>
-	  <div class="col"><b>{{producto.precio}}</b></div>
-	  <div class="col"><b>{{producto.total}}</b></div>
+	<div class="row detalle" ng-repeat="producto in cotLista">
+	  <div class="col col-10 text-center"><button class="button button-assertive button-small" ng-click="lineaChao('{{producto.codigo}}');"><i class="fa fa-trash fa-fw"></i></button></div>
+	  <div class="col"><b>{{producto.codigo}}</b></div>
+	  <div class="col"><b>{{producto.descripcion}}</b></div>  
+	  <div class="col text-center"><b>{{producto.stock}}</b></div>
+	  <div class="col text-center">
+	  	<button class="button button-assertive button-small button-outline" ng-click="lineaMenos('{{producto.codigo}}');"><i class="fa fa-minus fa-fw"></i></button>
+	  	<b>{{producto.cantidad}}</b>
+	  	<button class="button button-balanced button-small button-outline" ng-click="lineaMas('{{producto.codigo}}');"><i class="fa fa-plus fa-fw"></i></button>
+	  </div>
+	  <div class="col text-right"><b>$ {{producto.precio}}</b></div>
+	  <div class="col text-right"><b>$ {{producto.total}}</b></div>
 	</div>
 
-	<div class="row" ng-show="!Productos.length">
-	<div class="col vacio">No hay productos en esta cotización</div>
+	<div class="row" ng-show="!cotLista.length">
+		<div class="col vacio">No hay productos en esta cotización</div>
+	</div>
+
+	<div class="row totals firsttotal" ng-show="cotLista.length">
+	  <div class="col col-25 text-right col-offset-50">Precio neto</div>
+	  <div class="col col-25 text-right">$ {{neto}}</div>
+	</div>
+	<div class="row totals" ng-show="cotLista.length">
+	  <div class="col col-25 text-right col-offset-50">IVA</div>
+	  <div class="col col-25 text-right">$ {{iva}}</div>
+	</div>
+	<div class="row totals" ng-show="cotLista.length">
+	  <div class="col col-25 text-right col-offset-50">Total</div>
+	  <div class="col col-25 text-right">$ {{total}}</div>
 	</div>
 
 
 	<br /><br />
   	<div class="text-center">
-    	<button ng-click="imprimir()" class="button button-royal">Imprimir códigos</button>
+    	<button ng-click="imprimir()" class="button button-royal">Imprimir y limpiar todo</button>
     </div>
     <br /><br />
   </ion-content>
