@@ -105,9 +105,9 @@ angular.module('samsungcot.controllers', [])
 
 	$scope.agregarProducto = function() {
 
-		$state.go('home.add',{search: 'j7'});
+		//$state.go('home.add',{search: 'j7'});
 		
-    /*navigator.notification.prompt(
+    navigator.notification.prompt(
         'Ingrese texto a buscar',  // message
         function(results) { 
         	if (results.buttonIndex == 1) {
@@ -121,7 +121,7 @@ angular.module('samsungcot.controllers', [])
         },                  // callback to invoke
         'Agregar producto',            // title
         ['Ok','Cancelar']              // buttonLabels
-    );*/
+    );
     
 	};
 
