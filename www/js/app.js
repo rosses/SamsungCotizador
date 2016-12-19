@@ -1,5 +1,5 @@
 app = {
-        restApi:  "http://services.samsungstore.cl:8085/?",
+        restApi:  "http://190.96.22.39:8085/",
         impID: "",
         impNN: "",
         impSERV: "18F0",

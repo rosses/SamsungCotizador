@@ -8,7 +8,7 @@ angular.module('samsungcot.controllers', [])
   res = [];
   $scope.resList=res;
 
-	jQuery.post(app.restApi+'action=buscar&store_code=002', { str: $stateParams.search }, function(data) {
+	jQuery.post(app.restApi+'services/?action=buscar&store_code=002', { str: $stateParams.search }, function(data) {
 		$scope.hideload();
 		//alert(JSON.stringify(data));
 		if (data.items.length == 0) {
@@ -27,12 +27,12 @@ angular.module('samsungcot.controllers', [])
 		$state.go("home.main");
 	};
 
-	$scope.agregarSeleccion = function() {
-		if ($scope.addprod.sel) {
+	$scope.agregarSeleccion = function(item) {
+		if (item) { //$scope.addprod.sel
 			// verificar existe
 			var modificaExistente = 0;
 			for (var i = 0; i < $scope.cotLista.length ; i++) {
-				if ($scope.cotLista[i].codigo == $scope.addprod.sel.codigo) {
+				if ($scope.cotLista[i].codigo == item.codigo) {
 					$scope.cotLista[i].cantidad = (parseInt($scope.cotLista[i].cantidad) + 1);
 					$scope.cotLista[i].total = ($scope.cotLista[i].precio * $scope.cotLista[i].cantidad); 
 					modificaExistente = 1;
@@ -41,9 +41,9 @@ angular.module('samsungcot.controllers', [])
 			}
 
 			if (modificaExistente == 0) {
-				$scope.addprod.sel.cantidad = 1;
-				$scope.addprod.sel.total = (parseInt($scope.addprod.sel.precio) * 1);
-				$scope.cotLista.push($scope.addprod.sel);
+				item.cantidad = 1;
+				item.total = (parseInt(item.precio) * 1);
+				$scope.cotLista.push(item);
 			}
 
 			$scope.calcularTotales();
@@ -61,7 +61,7 @@ angular.module('samsungcot.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $state, $localStorage, $location, $timeout, $ionicLoading) {
+.controller('HomeCtrl', function($scope, $state, $localStorage, $location, $timeout, $ionicLoading, $ionicPopup) {
   
   
   if (!$localStorage.app) { $localStorage.app = app;  }
@@ -102,10 +102,11 @@ angular.module('samsungcot.controllers', [])
     );
 		
 	};
+  $scope.algo = "";
 
 	$scope.agregarProducto = function() {
-
-		//$state.go('home.add',{search: 'j7'});
+    /*
+		$state.go('home.add',{search: 'galaxy'});
 		
     navigator.notification.prompt(
         'Ingrese texto a buscar',  // message
@@ -121,7 +122,36 @@ angular.module('samsungcot.controllers', [])
         },                  // callback to invoke
         'Agregar producto',            // title
         ['Ok','Cancelar']              // buttonLabels
-    );
+    );*/
+    
+    $scope.data = {}
+
+    $ionicPopup.show({
+      template: '<input type="text" ng-model="data.algo">',
+      title: 'Buscar producto',
+      subTitle: '',
+      scope: $scope,
+      buttons: [
+        { text: 'Cerrar' },
+        {
+          text: '<b>Buscar</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+             if (!$scope.data.algo) {
+              e.preventDefault();
+             } else {
+              //alert($scope.data.algo);
+              if ($scope.data.algo.length > 1) {
+                $state.go('home.add',{search:$scope.data.algo});
+              }
+              else {
+                err('Ingrese 2 letras a lo menos');
+              }
+             }
+          }
+        }
+      ]
+    });
     
 	};
 
@@ -360,7 +390,7 @@ angular.module('samsungcot.controllers', [])
     //console.log(form);
     if(form.$valid) {
       $scope.showload();
-      jQuery.post(app.restApi+"action=validarInstalacion", {clave: $scope.user.password}, function(data) {
+      jQuery.post(app.restApi+"services/?action=validarInstalacion", {clave: $scope.user.password}, function(data) {
         if (data.clave == 1) {
           app.auth = 1;
           $localStorage.app = app;         

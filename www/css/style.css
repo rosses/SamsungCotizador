@@ -9,7 +9,7 @@
 .detalle div {
 	font-size: 16px;
 }
-.detalle button { font-size: 18px; margin-left: 20px; margin-right: 20px; font-weight: normal; }
+.detalle button { font-size: 18px; margin-left: 10px; margin-right: 10px; font-weight: normal; }
 .firsttotal {
 	margin-top: 30px !important;
 }
@@ -27,3 +27,12 @@
 .addProducto .radio-content div.azul { width: 25%; color: blue; display:inline-block; }
 .addProducto .radio-content div.rojo { width: 25%; color: red; display:inline-block; }
 .addProducto .radio-content div.negro { width: 25%; font-weight: bold; display:inline-block; }
+
+
+.addProducto .item {  }
+.addProducto .item div.rojo { width: 10%; color: red; display:inline-block; } /* N/A */
+
+.addProducto .item div.d { width: 50%; display:inline-block; }
+.addProducto .item div.azul { width: 15%; color: blue; display:inline-block; }
+.addProducto .item div.negro { width: 15%; font-weight: bold; display:inline-block; }
+.addProducto .item div.add { width: 20%; display:inline-block; text-align: center; }
