@@ -181,17 +181,8 @@ angular.module('samsungcot.controllers', [])
     printers = [];
     $scope.printerList=printers;
 
-    ble.enable(
-        function() {
-            err("Bluetooth is enabled");
-        },
-        function() {
-            err("The user did *not* enable Bluetooth");
-        }
-    );
-
     ble.startScan([], function(device) {
-      err(JSON.stringify(device));
+      //err(JSON.stringify(device));
       printer = { nombre: device.name, id: device.id };
       printers.push(printer);
       /*var string = device.name,
