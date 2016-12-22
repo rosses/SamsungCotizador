@@ -176,14 +176,14 @@ angular.module('samsungcot.controllers', [])
 	};
 
   $scope.printRefresh = function() {
-    //alert('printrefresh');
+    err('printrefresh');
     $scope.cargandoPrinters = true;
     $scope.noPrinterFound = false;
     printers = [];
     $scope.printerList=printers;
 
     ble.startScan([], function(device) {
-      //alert(JSON.stringify(device));
+      err(JSON.stringify(device));
       printer = { nombre: device.name, id: device.id };
       printers.push(printer);
       /*var string = device.name,
