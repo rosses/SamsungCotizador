@@ -180,19 +180,12 @@ angular.module('samsungcot.controllers', [])
     $scope.noPrinterFound = false;
     printers = [];
     $scope.printerList=printers;
-
+    /*
     ble.startScan([], function(device) {
       //err(JSON.stringify(device));
       printer = { nombre: device.name, id: device.id };
       printers.push(printer);
-      /*var string = device.name,
-      substring = "SAMSTORECC";
-      if (string.indexOf(substring) !== -1) {
-        app.impID = device.id;
-        app.impNN = device.name;
-        $localStorage.app = app;
-        //alert('set default: '+device.id)
-      }*/
+
     } , function(x) {
       // ERR
       err('ERR: '+JSON.stringify(x));
@@ -211,6 +204,10 @@ angular.module('samsungcot.controllers', [])
       ble.stopScan(function() {}, function() {});
 
     },5000)
+  */
+  bluetoothSerial.list(function(devices) {
+      err(JSON.stringify(devices));
+  }, function(e) { err('err'); err(JSON.stringify(e)); });
 
   };
   $scope.getCodigos = function() {

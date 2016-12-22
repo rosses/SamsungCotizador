@@ -70,7 +70,7 @@
   <plugin name="com.phonegap.plugins.barcodescanner" source="npm">
     <param name="CAMERA_USAGE_DESCRIPTION" value="Lector SamsungStore"/>
   </plugin>
-  <plugin name="cordova-plugin-ble-central" spec="1.1.3">
+  <plugin name="cordova-plugin-bluetooth-serial" spec="1.1.3">
     <param name="BLUETOOTH_USAGE_DESCRIPTION" value="Impresoras POS SamsungStore"/>
   </plugin>
 
