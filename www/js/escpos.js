@@ -401,7 +401,7 @@ function escpos (_raw) {
 		_text(text, encoding, _raw);
 		return print;
 	};
-	/*
+	
 	print.barcode = function(codes, qty, type, width, height, position, font) {
 
 		// centrar
@@ -421,7 +421,8 @@ function escpos (_raw) {
 		return print;
 	};
 
-	*/
+	
+	/*
 	print.barcode = function(codes, qty, type, width, height, position, font) {
 		for (i=0; i<codes.length; i++) {
 			var code = codes[i];
@@ -430,7 +431,7 @@ function escpos (_raw) {
 			_text((codes[i]+' x '+qty[i]).toBytes(), '', _raw);
 		}
 		return print;
-	}
+	}*/
 	
 
 	print.chinese2x = function(flag) {
