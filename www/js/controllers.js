@@ -183,10 +183,10 @@ angular.module('samsungcot.controllers', [])
 
     ble.enable(
         function() {
-            console.log("Bluetooth is enabled");
+            err("Bluetooth is enabled");
         },
         function() {
-            console.log("The user did *not* enable Bluetooth");
+            err("The user did *not* enable Bluetooth");
         }
     );
 
