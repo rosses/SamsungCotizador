@@ -227,41 +227,77 @@ angular.module('samsungcot.controllers', [])
   }
 
   $scope.imprimir = function() {
+
+    function objetoImprimir() {
+
+      var buffer = [];
+      function _raw (buf) {
+        buffer = buffer.concat(buf)
+      }
+
+      escpos(_raw)
+      .hw()
+      .set({align: 'center', width: 1, height: 2})
+      .text('COTIZACION')
+      .newLine(1)
+      .text('COMPROBANTE PARA CAJA')
+      .newLine(1)
+      .text('---------------------------')
+      .newLine(1)
+      .barcode($scope.getCodigos(),$scope.getCantidades(),'EAN13', 4, 90, 'BLW', 'B')
+      .cut();
+
+      return buffer;
+
+    };
+
   	if ($scope.cotLista.length == 0) {
   		err("Cotizacion esta vacia");
   	}
-    else if (app.impNN != "") {
-      function objetoImprimir() {
+    else {
 
-        var buffer = [];
-        function _raw (buf) {
-          buffer = buffer.concat(buf)
+      bluetoothSerial.list(function(devices) {
+        var printTo = "";
+        var printName = "";
+        devices.forEach(function(device) {
+          if (device.name.toLowerCase().indexOf("SAMSTORECC") >= 0) {
+            printTo = device.address;
+            printName = device.name;
+            break;
+          }
+        });
+
+        if (printTo == "") {
+          err('No se encontro impresora SAMSTORECC. Conecte su Bluetooth');
         }
+        else {
 
-        escpos(_raw)
-        .hw()
-        .set({align: 'center', width: 1, height: 2})
-        .text('COTIZACION')
-        .newLine(1)
-        .text('COMPROBANTE PARA CAJA')
-        .newLine(1)
-        .text('---------------------------')
-        .newLine(1)
-        .barcode($scope.getCodigos(),$scope.getCantidades(),'EAN13', 4, 90, 'BLW', 'B')
-        .cut();
+          var buffer = new Uint8Array(objetoImprimir()).buffer;
 
-        return buffer;
+          bluetoothSerial.isConnected(
+              function() {
+                  bluetoothSerial.write(buffer, function() {
+                    err('Si se pudo imprimir');
+                  }, function() {
+                    err('No se pudo imprimir');
+                  });
+              },
+              function() {
+                  bluetoothSerial.connect(printTo, function() {
 
-      };
+                  }, function() {
+                    err('No se pudo conectar con '+printName)
+                  });
+              }
+          );
 
-      var buffer = new Uint8Array(objetoImprimir()).buffer;
-      /*
-      var x = new Uint8Array(objetoImprimir());
-      alert(JSON.stringify(x));
-      */
+        }
+      }, function(e) { err('err'); err(JSON.stringify(e)); });
+
+
+
       
-
-      ble.isConnected(app.impID, function() {
+      /*ble.isConnected(app.impID, function() {
         ble.writeWithoutResponse(app.impID, app.impSERV, app.impCHAR, buffer, function(x) { 
         	// Estaba conectado y todo OK 1
         	$scope.cotLista = [];
@@ -283,13 +319,10 @@ angular.module('samsungcot.controllers', [])
           err('Problemas al conectar a su impresora. Valla a configuracion. refrescar y reconecte para imprimir nuevamente.');
         });
 
-      });
+      });*/
 
       
-    }
-    else {
-      err('No se ha configurado una impresora');
-    }
+    } 
   };
 
 
