@@ -90,17 +90,19 @@ angular.module('samsungcot.controllers', [])
   $scope.printerList=printers;
 
 	$scope.limpiarCotizacion = function() {
-    navigator.notification.confirm(
-        'Esta seguro?',  // message
-        function(buttonIndex) {
-        	if (buttonIndex == 1) {
-        		$scope.cotLista = [];
-        	}
-        },              // callback to invoke with index of button pressed
-        'Limpiar cotizacion',            // title
-        'Si,No'          // buttonLabels
-    );
-		
+      var confirmPopup = $ionicPopup.confirm({
+         title: 'Vaciar cotizacion',
+         template: '¿Esta seguro?'
+      });
+
+      confirmPopup.then(function(res) {
+         if(res) {
+            $scope.cotLista = [];
+         } else {
+            
+         }
+      });
+	
 	};
   $scope.algo = "";
 
@@ -291,7 +293,11 @@ angular.module('samsungcot.controllers', [])
               },
               function() {
                   bluetoothSerial.connect(printTo, function() {
-
+                    bluetoothSerial.write(buffer, function() {
+                      $scope.cotLista = [];
+                    }, function() {
+                      err('No se pudo imprimir');
+                    });
                   }, function() {
                     err('No se pudo conectar con '+printName)
                   });
