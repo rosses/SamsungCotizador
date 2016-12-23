@@ -260,7 +260,7 @@ angular.module('samsungcot.controllers', [])
         var printTo = "";
         var printName = "";
         devices.forEach(function(device) {
-          if (device.name.toLowerCase().indexOf("SAMSTORECC") >= 0) {
+          if (device.name.toLowerCase().indexOf("samstorecc") >= 0) {
             printTo = device.address;
             printName = device.name;
           }
