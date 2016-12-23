@@ -128,8 +128,8 @@ angular.module('samsungcot.controllers', [])
     
     $scope.data = {}
 
-    $ionicPopup.show({
-      template: '<input type="text" ng-model="data.algo">',
+    var buscap =$ionicPopup.show({
+      template: '<input type="text" ng-keypress="buscarEnter($event)" ng-model="data.algo">',
       title: 'Buscar producto',
       subTitle: '',
       scope: $scope,
@@ -154,6 +154,18 @@ angular.module('samsungcot.controllers', [])
         }
       ]
     });
+
+    $scope.buscarEnter = function(keyEvent) {
+      if (keyEvent.which === 13) {
+        if ($scope.data.algo.length > 1) {
+          buscap.close();
+          $state.go('home.add',{search:$scope.data.algo});
+        }
+        else {
+          err('Ingrese 2 letras a lo menos');
+        }
+      }
+    }
     
 	};
 
@@ -248,9 +260,11 @@ angular.module('samsungcot.controllers', [])
       escpos(_raw)
       .hw()
       .set({align: 'center', width: 1, height: 2})
-      .text('COTIZACION')
+      .text('SAMSTORE')
       .newLine(1)
-      .text('COMPROBANTE PARA CAJA')
+      .text('PRE-VENTA')
+      .newLine(1)
+      .text('COSTANERA CENTER')
       .newLine(1)
       .text('---------------------------')
       .newLine(1)
@@ -265,7 +279,7 @@ angular.module('samsungcot.controllers', [])
   		err("Cotizacion esta vacia");
   	}
     else {
-
+      $scope.showload();
       bluetoothSerial.list(function(devices) {
         var printTo = "";
         var printName = "";
@@ -277,7 +291,8 @@ angular.module('samsungcot.controllers', [])
         });
 
         if (printTo == "") {
-          err('No se encontro impresora SAMSTORECC. Conecte su Bluetooth');
+          $scope.hideload();
+          err('No se encontro impresora SAMSTORECC. Enciendala');
         }
         else {
 
@@ -286,19 +301,24 @@ angular.module('samsungcot.controllers', [])
           bluetoothSerial.isConnected(
               function() {
                   bluetoothSerial.write(buffer, function() {
-                    $scope.cotLista = [];
+                    $scope.hideload();
+                    //$scope.cotLista = [];
                   }, function() {
+                    $scope.hideload();
                     err('No se pudo imprimir');
                   });
               },
               function() {
                   bluetoothSerial.connect(printTo, function() {
                     bluetoothSerial.write(buffer, function() {
-                      $scope.cotLista = [];
+                      $scope.hideload();
+                      //$scope.cotLista = [];
                     }, function() {
+                      $scope.hideload();
                       err('No se pudo imprimir');
                     });
                   }, function() {
+                    $scope.hideload();
                     err('No se pudo conectar con '+printName)
                   });
               }
