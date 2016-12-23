@@ -410,7 +410,7 @@ function escpos (_raw) {
 
 		for (i=0; i<codes.length; i++) {
 			var code = codes[i];
-			var descri = desc[i];
+			var descri = (desc[i]).toBytes();
 			var code_qty = (codes[i]+' x '+qty[i]).toBytes();
 			_barcode([0x1D, 0x68, height], _raw);
 			_barcode(cmds['BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())], _raw);
