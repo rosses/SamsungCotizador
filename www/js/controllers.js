@@ -284,7 +284,7 @@ angular.module('samsungcot.controllers', [])
           bluetoothSerial.isConnected(
               function() {
                   bluetoothSerial.write(buffer, function() {
-                    err('Si se pudo imprimir');
+                    $scope.cotLista = [];
                   }, function() {
                     err('No se pudo imprimir');
                   });
