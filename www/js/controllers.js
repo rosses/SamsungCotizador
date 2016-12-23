@@ -263,7 +263,6 @@ angular.module('samsungcot.controllers', [])
           if (device.name.toLowerCase().indexOf("SAMSTORECC") >= 0) {
             printTo = device.address;
             printName = device.name;
-            break;
           }
         });
 
