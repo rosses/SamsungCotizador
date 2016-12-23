@@ -225,6 +225,14 @@ angular.module('samsungcot.controllers', [])
 		}
 		return ret;
   }
+  $scope.getDescripciones = function() {
+    var ret = [];
+    for (var i = 0; i < $scope.cotLista.length ; i++) {
+      ret.push($scope.cotLista[i].descripcion);
+    }
+    return ret;
+  }
+
 
   $scope.imprimir = function() {
 
@@ -244,7 +252,7 @@ angular.module('samsungcot.controllers', [])
       .newLine(1)
       .text('---------------------------')
       .newLine(1)
-      .barcode($scope.getCodigos(),$scope.getCantidades(),'EAN13', 4, 90, 'BLW', 'B')
+      .barcode($scope.getCodigos(),$scope.getCantidades(),$scope.getDescripciones(),'EAN13', 4, 90, 'BLW', 'B')
       .cut();
 
       return buffer;

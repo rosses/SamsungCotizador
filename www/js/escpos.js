@@ -402,7 +402,7 @@ function escpos (_raw) {
 		return print;
 	};
 	
-	print.barcode = function(codes, qty, type, width, height, position, font) {
+	print.barcode = function(codes, qty, desc, type, width, height, position, font) {
 
 		// centrar
 		_barcode([0x1B, 0x61, 01], _raw);
@@ -410,12 +410,17 @@ function escpos (_raw) {
 
 		for (i=0; i<codes.length; i++) {
 			var code = codes[i];
+			var descri = desc[i];
 			var code_qty = (codes[i]+' x '+qty[i]).toBytes();
 			_barcode([0x1D, 0x68, height], _raw);
 			_barcode(cmds['BARCODE_' + ((type || 'EAN13').replace('-', '_').toUpperCase())], _raw);
 			_barcode(code.toBytes(), _raw);
 			_barcode(cmds.CTL_CR, _raw);
+			_barcode([ 0x1b, 0x21, 0x00 ], _raw); // texto grande
 			_barcode(code_qty, _raw);
+			_barcode(cmds.CTL_CR, _raw);
+			_barcode([ 0x1b, 0x21, 0x10 ], _raw); // texto chico
+			_barcode(descri, _raw);
 			_barcode(cmds.CTL_LF, _raw);
 		}
 		return print;
