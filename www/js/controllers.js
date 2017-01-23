@@ -269,6 +269,10 @@ angular.module('samsungcot.controllers', [])
       .text('---------------------------')
       .newLine(1)
       .barcode($scope.getCodigos(),$scope.getCantidades(),$scope.getDescripciones(),'EAN13', 4, 90, 'BLW', 'B')
+      .newLine(1)
+      .text('-------- TOTAL --------')
+      .newLine(1)
+      .text('$ '+$scope.total)
       .cut();
 
       return buffer;

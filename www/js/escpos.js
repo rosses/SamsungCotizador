@@ -424,6 +424,8 @@ function escpos (_raw) {
 			_barcode([ 0x1b, 0x21, 0x00 ], _raw); // texto chico
 			_barcode(descri, _raw);
 			_barcode(cmds.CTL_LF, _raw);
+			_barcode(code.toBytes(), _raw);
+			_barcode(cmds.CTL_LF, _raw);
 		}
 		return print;
 	};
