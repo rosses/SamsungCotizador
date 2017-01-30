@@ -270,9 +270,11 @@ angular.module('samsungcot.controllers', [])
       .newLine(1)
       .barcode($scope.getCodigos(),$scope.getCantidades(),$scope.getDescripciones(),'EAN13', 4, 90, 'BLW', 'B')
       .newLine(1)
+      .set({align: 'center', width: 1, height: 2})
       .text('-------- TOTAL --------')
       .newLine(1)
-      .text('$ '+$scope.total)
+      .text('$ '+miles($scope.total))
+      .set({align: 'center', width: 1, height: 1})
       .cut();
 
       return buffer;
@@ -494,4 +496,16 @@ String.prototype.toBytes = function() {
     arr.push(this[i].charCodeAt(0))
     }
     return arr
+}
+
+function miles(nStr) {
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? ',' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+    return x1 + x2;
 }

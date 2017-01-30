@@ -28,8 +28,8 @@
 	  	<b>{{producto.cantidad}}</b>
 	  	<button class="button button-balanced button-small button-outline" ng-click="lineaMas('{{producto.codigo}}');"><i class="fa fa-plus fa-fw"></i></button>
 	  </div>
-	  <div class="col text-right"><b>$ {{producto.precio}}</b></div>
-	  <div class="col text-right"><b>$ {{producto.total}}</b></div>
+	  <div class="col text-right"><b>{{(producto.precio | currency:"$ ":0)}}</b></div>
+	  <div class="col text-right"><b>{{(producto.total | currency:"$ ":0)}}</b></div>
 	</div>
 
 	<div class="row" ng-show="!cotLista.length">
@@ -38,15 +38,15 @@
 
 	<div class="row totals firsttotal" ng-show="cotLista.length">
 	  <div class="col col-25 text-right col-offset-50">Precio neto</div>
-	  <div class="col col-25 text-right">$ {{neto}}</div>
+	  <div class="col col-25 text-right">{{(neto | currency:"$ ":0)}}</div>
 	</div>
 	<div class="row totals" ng-show="cotLista.length">
 	  <div class="col col-25 text-right col-offset-50">IVA</div>
-	  <div class="col col-25 text-right">$ {{iva}}</div>
+	  <div class="col col-25 text-right">{{(iva | currency:"$ ":0)}}</div>
 	</div>
 	<div class="row totals" ng-show="cotLista.length">
 	  <div class="col col-25 text-right col-offset-50">Total</div>
-	  <div class="col col-25 text-right">$ {{total}}</div>
+	  <div class="col col-25 text-right">{{(total | currency:"$ ":0)}}</div>
 	</div>
 
 
