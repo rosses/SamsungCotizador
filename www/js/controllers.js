@@ -273,7 +273,7 @@ angular.module('samsungcot.controllers', [])
       .set({align: 'center', width: 1, height: 2})
       .text('-------- TOTAL --------')
       .newLine(1)
-      .text('$ '+miles($scope.total))
+      .text('$ '+miles($scope.neto))
       .set({align: 'center', width: 1, height: 1})
       .cut();
 
